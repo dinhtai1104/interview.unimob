@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
-using System;
 
 public class SpiderMovement : MonoBehaviour
 {
@@ -12,9 +11,11 @@ public class SpiderMovement : MonoBehaviour
     private List<Vector3> path;
     private int currentWaypoint = 0;
     private bool canMove = false;
+    private float currentSpeed;
 
     private void OnEnable()
     {
+        currentSpeed = Random.Range(speed * 0.7f, speed * 1.3f);
         canMove = false;
         currentWaypoint = 0;
         path = new List<Vector3>();
@@ -76,7 +77,7 @@ public class SpiderMovement : MonoBehaviour
         }
         Vector3 nextStep = path[currentWaypoint];
         Vector3 direction = nextStep - transform.position;
-        transform.position = Vector3.MoveTowards(transform.position, nextStep, speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, nextStep, currentSpeed * Time.deltaTime);
         if (Vector2.Distance(transform.position, nextStep) < 0.1f)
         {
             transform.position = nextStep;
